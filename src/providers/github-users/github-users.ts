@@ -11,10 +11,17 @@ export class GithubUsersProvider {
 
   constructor(public http: HttpClient) {}
 
-  load(): Observable<User[]> {
+  load(): Observable<any> {
   	//const result = this.http.get(`${this.githubApiUrl}/users`).map(res => <User[]>res.json());
-  	const result = this.http.get(`${this.githubApiUrl}/users`);
-  	console.log(result);
-    return result;
+  	return this.http.get(`${this.githubApiUrl}/users`);
   }
+
+  loadDetails(login: string): Observable<User> {
+    return this.http.get(`${this.githubApiUrl}/users/${login}`);
+  }  
+
+  searchUsers(searchParam: string): Observable<User[]> {
+  	console.log('searchParam', searchParam);
+    return this.http.get(`${this.githubApiUrl}/search/users?q=${searchParam}`);
+  }  
 }
